@@ -1,0 +1,33 @@
+
+.login{
+    margin: 0%;
+    padding: 0%;
+}
+/* html,body{
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+} */
+.login-right{
+  overflow: hidden; 
+  height: 100vh;
+
+}
+.login-footer{
+    width: 100%;
+    height: 5rem;
+}
+.login-content{
+    width: 100%;
+    min-height: 5rem;
+}
+.login-button{
+    background-color: #597EF7;
+    text-decoration: none;
+    border: none;
+    padding: 5px;
+    color: #fff;
+    border-radius: 2px;
+    padding-right: 1rem;
+    padding-right: 0.5rem;
+}
