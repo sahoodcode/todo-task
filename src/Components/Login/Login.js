@@ -2,7 +2,7 @@ import React from 'react'
 import "./Login.css"
 import vector from "../../Data/vector.png"
 import right from "../../Data/right.png"
-import google from "../../Data/google.png"
+import google from "../../Data/google2.png"
 
 
 
@@ -28,7 +28,7 @@ function Login() {
           <button className='login-button mt-3' > 
             <img src={google}
              alt="icon"
-             style={{width:"1.5rem",borderRadius:"1px",marginRight:"10px"}}
+             style={{width:"2rem",borderRadius:"1px",marginRight:"10px"}}
               /> 
               Sign in using Google</button>
         </div>
