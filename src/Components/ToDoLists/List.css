@@ -1,0 +1,51 @@
+.home-todo-lists .dropdown-toggle::after {
+    display: none;
+    outline: none;
+}
+
+.dropdown-toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.button-logout{
+    width: 5rem;
+    height: 2rem;
+    background: #a8bcfc;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none;
+}
+
+.home-todo-horizondal {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(206, 202, 202);
+}
+
+.home-todo-lists p {
+    color: rgb(68, 67, 67);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.home-todo-lists h5 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+}
+
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}

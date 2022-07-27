@@ -1,12 +1,13 @@
 import React from 'react'
-import Login from './Components/Login/Login';
-import NavBar from './Components/NavBar';
+import Home from './Pages/Home/Home';
+import Login from './Pages/Login/Login';
 
 function App() {
   return (
     <div >
      {/* <NavBar /> */}
-     <Login />
+     {/* <Login /> */}
+     <Home />
     </div>
   );
 }

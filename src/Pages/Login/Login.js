@@ -3,14 +3,28 @@ import "./Login.css"
 import vector from "../../Data/vector.png"
 import right from "../../Data/right.png"
 import google from "../../Data/google2.png"
-
-
+import { auth } from "../../firebase-config"
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+  const navigate = useNavigate()
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      navigate('/home')
+    }).catch((err) => {
+      console.log(err);
+      alert(err.message)
+    })
+
+  }
   return (
     <div className='login row ' >
       <div className='col-12 col-md-6 login-right ' >
-        <div className="login-footer p-5" 
+        <div className="login-nav p-5" 
        >
           <img src={vector} alt="logo" />
         </div>
@@ -27,7 +41,9 @@ function Login() {
             nulla deleniti? Illum, doloremque! Sequi, ut facilis.</p>
         </div>
         <div className="login-content d-flex justify-content-center p-5  ">
-          <button className='login-button mt-3' > 
+          <button 
+          onClick={signInWithGoogle}
+          className='login-button mt-3' > 
             <img src={google}
              alt="icon"
              style={{width:"2.5rem", borderRadius:"1px",marginRight:"10px"}}

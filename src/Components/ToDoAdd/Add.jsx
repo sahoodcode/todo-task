@@ -1,0 +1,59 @@
+import React, { useState } from 'react'
+import vector from "../../Data/vector.png"
+import { getAuth } from "firebase/auth";
+import { db } from "../../firebase-config"
+import "./Add.css"
+import { addDoc, collection } from 'firebase/firestore';
+
+function Add() {
+  const [title, setTitle] = useState('')
+  const [desc, setdesc] = useState('')
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const uid = user.uid
+
+  const handleStore = async () => {
+    const docRef = await addDoc(collection(db, uid), {
+      title,
+      desc,
+      status: "none"
+    });
+    alert(`${title} Added`)
+    setTitle('')
+    setdesc('')
+  }
+
+  return (
+    <div className="col-12 col-md-6 home-left">
+      <div className="login-nav p-5" >
+        <img src={vector} alt="logo" style={{ height: "3rem" }} />
+      </div>
+      <div className="login-content d-flex justify-content-center  ">
+        <h4 className='mt-5' >TODO</h4>
+      </div>
+      <div className="login-content d-flex justify-content-center px-5 mt-3 ">
+        <p style={{ textAlign: "center", width: "28rem", fontSize: "16px", color: "gray" }} 
+        >Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Voluptate vitae inventore
+          quia odit veritatis facere velit, asperiores
+          nulla deleniti? Illum, doloremque! Sequi, ut facilis.</p>
+      </div>
+      <div className="home-left-input mt-3">
+        <input type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          className='col-5'
+          placeholder='Title'
+          value={title} />
+        <input type="text"
+          onChange={(e) => setdesc(e.target.value)}
+          className='col-5'
+          placeholder='Description'
+          value={desc} />
+        <button className='col-4 mt-3' 
+        onClick={handleStore} >Add</button>
+      </div>
+    </div>
+  )
+}
+
+export default Add
