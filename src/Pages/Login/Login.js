@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Login.css"
 import vector from "../../Data/vector.png"
 import right from "../../Data/right.png"
 import google from "../../Data/google2.png"
 import { auth } from "../../firebase-config"
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, 
+  setPersistence, browserSessionPersistence,  } from "firebase/auth";
 import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    const auth = getAuth();
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    const provider = new GoogleAuthProvider()
+    // New sign-in will be persisted with session persistence.
+    return signInWithPopup(auth, provider)
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+  }, [])
+  
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
@@ -19,8 +38,10 @@ function Login() {
       console.log(err);
       alert(err.message)
     })
-
   }
+  
+
+
   return (
     <div className='login row ' >
       <div className='col-12 col-md-6 login-right ' >

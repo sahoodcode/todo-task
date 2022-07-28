@@ -1,44 +1,67 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 import "./List.css"
 import { GoKebabVertical } from "react-icons/go";
 import { FaSistrix } from "react-icons/fa"
-import { collection,getDocs, doc, updateDoc,query, where } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, query, where } from "firebase/firestore";
 import { db } from '../../firebase-config'
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { listContext } from "../../Helpers/Context"
 
 function List() {
-    const [list, setList] = useState([])
     const [search, setSearch] = useState('')
+    const [uid, setUid] = useState('')
     const navigate = useNavigate()
+    const { list, setList } = useContext(listContext)
     const auth = getAuth();
-    const user = auth.currentUser;
-    const uid = user.uid
 
     useEffect(() => {
+
+        const unsub = auth.onAuthStateChanged((authObj) => {
+            unsub();
+            if (authObj) {
+                console.log(authObj.uid);
+                setUid(authObj.uid)
+                listLoader()
+            } else {
+                console.log("authObj");
+            }
+        });
+    }, [])
+
+    const listLoader = async () => {
+        const user = await auth.currentUser
+        const uid = user.uid
+        console.log(uid);
         const colRef = collection(db, uid)
+        console.log(uid);
         getDocs(colRef)
             .then((snapshot) => {
+                console.log("kj")
                 let data = []
                 snapshot.docs.forEach((doc) => {
                     data.push({ ...doc.data(), id: doc.id })
                     setList(data)
-                    console.log(data);})})
+
+                    console.log(data);
+                })})
             .catch((err) => {
-                alert(err.message)})
-    }, [])
+                alert(err.message)
+            })}
 
     const StatusChanger = async (id, status) => {
-        console.log(id, status);
+        const user = auth.currentUser
+        const uid = user.uid
         const frankDocRef = doc(db, uid, id)
         await updateDoc(frankDocRef, {
             status: status
         })}
 
-    const listFilter = async (condition,id) => {
-        console.log(id);
-        const q = query(collection(db, uid),where(condition,"==",id) )
+    const listFilter = async (condition, id) => {
+        const user = auth.currentUser
+        const uid = user.uid
+        const q = query(collection(db, uid), where(condition, "==", id))
         let data = []
         setList([])
         setSearch('')
@@ -48,8 +71,10 @@ function List() {
             setList(data)
             console.log(data);
         })}
-    const AllLists = async (id) => {
-        console.log(id);
+
+    const AllLists = async () => {
+        const user = auth.currentUser
+        const uid = user.uid
         const q = query(collection(db, uid))
         let data = []
         setList([])
@@ -59,29 +84,34 @@ function List() {
             setList(data)
             console.log(data);
         })}
+
     const logout = () => {
-        signOut(auth);
-        navigate("/")
-    }
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            navigate("/")
+            console.log("loogiuut");
+        }).catch((error) => {
+            alert(error.message)
+        })}
 
     return (
         <div className="col-12 col-md-6 home-right mt-5 ">
             <div className="d-flex justify-content-between px-3">
-             <h4 className='ms-3' >TODO LIST </h4>
-             <button 
-             onClick={logout}
-             className='button-logout' >Logout</button>
+                <h4 className='ms-3' >TODO LIST </h4>
+                <button
+                    onClick={logout}
+                    className='button-logout' >Logout</button>
             </div>
             <div className="login-content d-flex justify-content-between mt-4 p-3">
                 <div className='mt-1 home-search' >
-                    <input 
-                    type="text" 
-                    placeholder='Seach Title'
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}/> 
-                    <FaSistrix 
-                    className='search-icon'
-                    onClick={() => listFilter("title",search)} />
+                    <input
+                        type="text"
+                        placeholder='Seach Title'
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)} />
+                    <FaSistrix
+                        className='search-icon'
+                        onClick={() => listFilter("title", search)} />
                 </div>
                 <Dropdown className='border' style={{ height: "2.5rem" }} >
                     <Dropdown.Toggle variant="muted" id="dropdown-basic">
@@ -89,14 +119,14 @@ function List() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => listFilter("status","completed")} >
-                        Completed</Dropdown.Item>
-                        <Dropdown.Item  onClick={() => listFilter("status","favourite")} >
-                        Favourite</Dropdown.Item>
-                        <Dropdown.Item  onClick={() => listFilter("status","deleted")} >
-                        Deleted</Dropdown.Item>
-                        <Dropdown.Item  onClick={AllLists} >
-                        All</Dropdown.Item>
+                        <Dropdown.Item onClick={() => listFilter("status", "completed")} >
+                            Completed</Dropdown.Item>
+                        <Dropdown.Item onClick={() => listFilter("status", "favourite")} >
+                            Favourite</Dropdown.Item>
+                        <Dropdown.Item onClick={() => listFilter("status", "deleted")} >
+                            Deleted</Dropdown.Item>
+                        <Dropdown.Item onClick={AllLists} >
+                            All</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
@@ -117,11 +147,11 @@ function List() {
                                 <Dropdown.Item
                                     onClick={() => StatusChanger(obj.id, "completed")}>
                                     Completed</Dropdown.Item>
-                                <Dropdown.Item 
-                                onClick={() => StatusChanger(obj.id, "favourite")}>
+                                <Dropdown.Item
+                                    onClick={() => StatusChanger(obj.id, "favourite")}>
                                     Favourite</Dropdown.Item>
-                                <Dropdown.Item 
-                                onClick={() => StatusChanger(obj.id, "deleted")}>
+                                <Dropdown.Item
+                                    onClick={() => StatusChanger(obj.id, "deleted")}>
                                     Deleted</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
@@ -133,6 +163,7 @@ function List() {
             </div>
         </div>
     )
+
 }
 
 export default List

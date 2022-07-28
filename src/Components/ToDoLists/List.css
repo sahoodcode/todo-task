@@ -49,3 +49,8 @@ label:focus,
     -webkit-appearance:none;
     box-shadow: none !important;
 }
+
+.home-todo-lists{
+    overflow-y: scroll;
+    height: 23rem;
+}
