@@ -10,24 +10,24 @@ const Home = () => {
   const navigaet = useNavigate()
   const auth = getAuth();
 
-//   firebase.auth().onAuthStateChanged(user => {
-//     user ? history.push("/dashboard") : history.push("/login");
-//     renderApp();
-//  });
-// useEffect(() => {
+  firebase.auth().onAuthStateChanged(user => {
+    user ? history.push("/dashboard") : history.push("/login");
+    renderApp();
+ });
+useEffect(() => {
   
-//   redirector()
+  redirector()
   
-// }, [])
+}, [])
 
-// const redirector = async () => {
-//   const user = await auth.currentUser
-//   if (user) {
-//     return navigaet("/")
-//   }else{
-//     navigaet("/home")
-//   }
-// }
+const redirector = async () => {
+  const user = await auth.currentUser
+  if (user) {
+    return navigaet("/")
+  }else{
+    navigaet("/home")
+  }
+}
   return (
     <div className='row'>
       <listContext.Provider value={{list,setList}} >
