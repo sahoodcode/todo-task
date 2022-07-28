@@ -5,12 +5,10 @@ import { db } from "../../firebase-config"
 import "./Add.css"
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
 import { listContext } from "../../Helpers/Context"
-import { useNavigate } from 'react-router-dom';
 
 function Add() {
   const [title, setTitle] = useState('')
   const [desc, setdesc] = useState('')
-const navigate = useNavigate()
   const { setList, list } = useContext(listContext)
   const auth = getAuth();
 
