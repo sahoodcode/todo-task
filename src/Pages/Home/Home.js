@@ -10,10 +10,7 @@ const Home = () => {
   const navigaet = useNavigate()
   const auth = getAuth();
 
-  firebase.auth().onAuthStateChanged(user => {
-    user ? history.push("/dashboard") : history.push("/login");
-    renderApp();
- });
+
 useEffect(() => {
   
   redirector()
