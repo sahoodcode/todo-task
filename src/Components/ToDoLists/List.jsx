@@ -21,11 +21,9 @@ function List() {
         const unsub = auth.onAuthStateChanged((authObj) => {
             unsub();
             if (authObj) {
-                console.log(authObj.uid);
                 setUid(authObj.uid)
                 listLoader()
             } else {
-                console.log("authObj");
             }
         });
     }, [])
@@ -33,18 +31,14 @@ function List() {
     const listLoader = async () => {
         const user = await auth.currentUser
         const uid = user.uid
-        console.log(uid);
         const colRef = collection(db, uid)
-        console.log(uid);
         getDocs(colRef)
             .then((snapshot) => {
-                console.log("kj")
                 let data = []
                 snapshot.docs.forEach((doc) => {
                     data.push({ ...doc.data(), id: doc.id })
                     setList(data)
 
-                    console.log(data);
                 })})
             .catch((err) => {
                 alert(err.message)

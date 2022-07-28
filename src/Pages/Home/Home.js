@@ -19,10 +19,12 @@ useEffect(() => {
 
 const redirector = async () => {
   const user = await auth.currentUser
-  if (user) {
-    return navigaet("/")
+  const uid = user.uid
+  if (uid) {
+    console.log(uid);
+    return navigaet("/home")
   }else{
-    navigaet("/home")
+    return navigaet("/")
   }
 }
   return (
