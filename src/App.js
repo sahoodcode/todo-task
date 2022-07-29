@@ -4,7 +4,7 @@ import Login from './Pages/Login/Login';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Add from './Components/ToDoAdd/Add';
 import List from './Components/ToDoLists/List';
-import {listContext} from "./Helpers/Context"
+import { listContext } from "./Helpers/Context"
 
 
 function App() {
@@ -12,25 +12,16 @@ function App() {
 
   return (
     <div >
-     {/* <Login /> */}
-     {/* <Home /> */}
-     <listContext.Provider value={{list,setList}} >
-     
-     {/* <BrowserRouter  > */}
-    <BrowserRouter basename="/todo-task" >
-    
-    <Routes>
-      <Route path="/index.html/home" element={<Home />} />
-      <Route path="index.html/" element={<Login />} />
-      {/* <Route path="/add" element={<Add />} />
-      <Route path="/login" element={<List />} /> */}
-      
-    </Routes>
-   
-    
-    </BrowserRouter>
-    
-   
+      <listContext.Provider value={{ list, setList }} >
+        {/* <BrowserRouter  > */}
+        <BrowserRouter basename="/todo-task" >
+
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Login />} />
+          </Routes>
+
+        </BrowserRouter>
       </listContext.Provider>
     </div>
   );
