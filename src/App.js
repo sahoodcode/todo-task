@@ -16,8 +16,8 @@ function App() {
      {/* <Home /> */}
      <listContext.Provider value={{list,setList}} >
      
-     <BrowserRouter  >
-    {/* <BrowserRouter basename="/todo-task" > */}
+     {/* <BrowserRouter  > */}
+    <BrowserRouter basename="/todo-task" >
     
     <Routes>
       <Route path="/home" element={<Home />} />
