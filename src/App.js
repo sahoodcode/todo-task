@@ -20,8 +20,8 @@ function App() {
     <BrowserRouter basename="/todo-task" >
     
     <Routes>
-      <Route path="/gh-pages-url/home" element={<Home />} />
-      <Route path="/gh-pages-url/" element={<Login />} />
+      <Route path="/index.html/home" element={<Home />} />
+      <Route path="index.html/" element={<Login />} />
       {/* <Route path="/add" element={<Add />} />
       <Route path="/login" element={<List />} /> */}
       

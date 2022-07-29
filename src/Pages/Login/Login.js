@@ -38,7 +38,7 @@ function Login() {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
       .then((result) => {
-        navigate('/gh-pages-url/home')
+        navigate('/index.html/home')
       }).catch((err) => {
         console.log(err);
         alert(err.message)
